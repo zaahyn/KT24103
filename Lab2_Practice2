@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+// Node class
+class Node {
+	int data; //first column item
+	string product_name; //2nd column item
+	double price; //3rd column item
+	Node* next;
+	
+	public:
+	Node() {}; //constructor 
+	void setData(int aData) {  //mutator
+		data = aData; 
+	};		
+	void setNext(Node* aNext) { //mutator
+		next = aNext; 
+	};
+	int Data() {  //accessor
+		return data; 
+	};
+	Node* Next() { //accessor
+		return next; 
+	};
+};
+
+// List class
+class List {
+	Node *head;
+	
+	public:
+		List() { //constructor
+			head = NULL; 
+		};
+		void addNode(int data);
+		void print();
+};
+
+//Append a node to the linked list
+void List::addNode(int data) {
+	// Create a new node
+	Node* newNode = new Node();
+	newNode->setData(data);
+	newNode->setNext(NULL);
+	// Create a temp pointer
+	Node *tmp = head;
+	if ( tmp != NULL ) {
+		// Nodes already present in the list
+		while ( tmp->Next() != NULL ) {
+			tmp = tmp->Next();
+		}
+		// Point the last node to the new node
+		tmp->setNext(newNode);
+	}
+	else {
+		// First node in the list
+		head = newNode;
+	}
+}
+
+void List::print(){
+	Node *temp = head;
+	
+	do{
+		cout << temp->Data() << " ";
+		temp = temp->Next();
+	} while(temp!=NULL);
+}
+
+int main(){
+	List list;  //create a list
+	
+	cout << "==============================\n";
+	cout << "BC Items                 Price\n";
+	cout << "==============================\n";
+	list.addNode(10, "Pagoda Gnut 110g", 3.49);
+	list.addNode(11, "Hup Seng Cream Cracker", 4.19);
+	list.addNode(12, "Yit Poh 2n1 Kopi-o", 7.28);
+	list.addNode(13, "Zoelife SN & Seed", 5.24);
+	list.addNode(14, "Gatsby S/FO Wet&Hard", 16.99);
+	list.addNode(15, "GB W/G U/Hold 150g", 6.49);
+	list.print(); //this is answer/position of the print
+	cout << "==============================\n";
+	cout << "Total (GST Incl.) \n" << sum; //find the sum value for linked list
+	cout << "==============================\n";
+	
+	return 0;
+}
