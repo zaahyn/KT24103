@@ -1,0 +1,146 @@
+#include <iostream>
+using namespace std;
+//struct
+struct node {
+	int x;
+	node *next;
+};
+
+//initialize head
+void initNode(node *head, int n){
+	head->x = n;
+	head->next = NULL;
+}
+
+//add a node to the list at tail
+void addNode(node *head, int n) {
+	node *newNode = new node;
+	newNode->x = n;
+	newNode->next = NULL;
+
+	node *cur = head; //current node
+	
+	while(cur) {
+		if(cur->next == NULL) {
+			cur->next = newNode;
+			return;
+		}
+	cur = cur->next;
+	}
+}
+
+void print(node *head){
+	
+	node *cur = head;
+	while(cur)	{
+		cout << cur->x << " ";		
+		cur = cur->next;
+	}
+	cout << endl;
+}
+
+void insert_atFront(node **head, int n){
+	node *new_node = new node;
+	new_node->x = n;
+	new_node->next = (*head);
+	(*head) = new_node;
+}
+
+void insert_atPosition(node **head, int pos, int v){
+	node *new_node = new node;
+	new_node->next = (*head);
+	
+	while(pos--){
+		new_node = new_node->next;
+		if(new_node->next == NULL){
+            cout << "Exit postion. No node is added." << endl;
+            break;
+        }
+	} //new_node is pointed to the location/position. 
+	
+	if(new_node->next != NULL){
+		node *temp = new node;
+		temp->x = new_node->x;
+		temp->next = new_node->next;
+		new_node->x = v;
+		new_node->next = temp;
+	} 
+}
+
+node *searchNode(node *head, int n){
+	
+	node *new_node = head;
+	node *tail = new node;
+	tail->x = n;
+	tail->next = NULL;
+	
+	do {
+		if(new_node->x == n){  //if the value is found
+			return new_node;
+			break;
+		}
+		new_node = new_node->next;
+	} while(new_node);
+	
+	return tail; //if the value is not found
+	
+}
+
+bool deleteNode(node **head, int n){
+	node *new_node = new node;
+	new_node = searchNode(*head, n);
+	//if value is found in the linked list
+	if(new_node->next != NULL){
+		cout << "Element found. \n";
+		//if it is the first item to be deleted
+		node *current = *head;
+		if(current->x == n){
+			*head  = current->next;
+			delete current;
+			return true;
+		}
+		//if it is not the first item to be deleted
+		while(current){
+			if(current->next->x == n){
+				current->next =current->next->next;
+				return true;
+			}
+			current = current->next;
+		}
+	} else {   //if value is not found in the linked list
+		cout << "No element is found in the list." << endl;
+		return false;
+	}
+}
+
+
+int main(){
+	int n = 4;
+	node *head = new node;
+	initNode(head,n);
+	addNode(head,1);
+	addNode(head,3);
+	addNode(head,0);
+	addNode(head,9);
+	addNode(head,-2);
+	addNode(head,-5);
+	print(head);
+	insert_atFront(&head,5);
+	insert_atFront(&head,7);
+	print(head);
+	insert_atPosition(&head,15,-88); //we insert value -88 to position 4
+	print(head);
+	
+	node *ptrFound = searchNode(head, -2);
+	if(ptrFound->next != NULL)
+		cout << "Element " << ptrFound->x << " found." << endl;
+	else
+		cout << "Element NOT found." << endl;
+	
+	int numDel = 6;
+	if(deleteNode(&head, numDel)) //delete first element
+		cout << "Node " << numDel << " is deleted." << endl;
+	print(head);
+	
+	return 0;
+}
