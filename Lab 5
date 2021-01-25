@@ -1,0 +1,21 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+void sort_numbers_ascending(int array[], int i)
+{
+const int length =3;
+sort(array, array+length);
+for (int i=0; i < length; i++)
+cout <<array[i] << " ";
+}
+int main(){
+int i;
+const int length =3;
+int A,B,C;
+cout<<"Please enter three integers number: "<<endl;
+cin>>A>>B>>C;
+int array[length] = {A,B,C};
+cout << "The ascending order is: "<<endl;
+sort_numbers_ascending(array,i);
+return 0;
+}
